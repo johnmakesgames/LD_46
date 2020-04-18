@@ -30,12 +30,12 @@ public class CameraFollowScript : MonoBehaviour
 
         if (currentDistanceToPlayer > distanceToPlayer + 10)
         {
-            this.GetComponent<Rigidbody>().AddForce((player.transform.position - this.transform.position).normalized);
+            //this.GetComponent<Rigidbody>().AddForce((player.transform.position - this.transform.position).normalized);
         }
 
         if (currentDistanceToPlayer < distanceToPlayer - 10)
         {
-            this.GetComponent<Rigidbody>().AddForce(-(player.transform.position - this.transform.position).normalized);
+            //this.GetComponent<Rigidbody>().AddForce(-(player.transform.position - this.transform.position).normalized);
         }
     }
 

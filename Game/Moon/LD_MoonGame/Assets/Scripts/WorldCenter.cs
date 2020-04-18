@@ -12,10 +12,7 @@ public class WorldCenter : MonoBehaviour
         Vector3 otherUpDirection = transform.up;
         transform.rotation = Quaternion.FromToRotation(otherUpDirection, targetDirection) * transform.rotation;
 
-        var directionTo = (transform.position - this.transform.position);
-        var distance = (directionTo.magnitude - 100 > 1) ? directionTo.magnitude - 100 : 1;
-        Debug.Log(distance);
-        transform.GetComponent<Rigidbody>().AddForce(targetDirection * (GravityStrength * distance));
+        transform.GetComponent<Rigidbody>().AddForce(targetDirection * GravityStrength);
     }
 
     public void FixedUpdate()
@@ -25,6 +22,7 @@ public class WorldCenter : MonoBehaviour
         {
             var transform = phyicsObject.GetComponent<Transform>();
             AttractToPlanet(transform);
+            phyicsObject.GetComponent<PhysicsObject>().direcitonToMoon = (transform.position - base.transform.position).normalized;
         }
     }
 }
