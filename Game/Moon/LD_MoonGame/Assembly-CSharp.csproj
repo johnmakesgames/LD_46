@@ -64,9 +64,14 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Assets\Scripts\CameraFollowScript.cs" />
+    <Compile Include="Assets\Scripts\Crate.cs" />
+    <Compile Include="Assets\Scripts\EnergyRefilPlatform.cs" />
+    <Compile Include="Assets\Scripts\GameManager.cs" />
     <Compile Include="Assets\Scripts\ItemPickup.cs" />
     <Compile Include="Assets\Scripts\MoonManController.cs" />
     <Compile Include="Assets\Scripts\PhysicsObject.cs" />
+    <Compile Include="Assets\Scripts\UIManager.cs" />
+    <Compile Include="Assets\Scripts\WaterDeliveryPlatform.cs" />
     <Compile Include="Assets\Scripts\WorldCenter.cs" />
     <None Include="Assets\Shaders\PS.shader" />
     <Reference Include="Unity.Timeline.Editor">

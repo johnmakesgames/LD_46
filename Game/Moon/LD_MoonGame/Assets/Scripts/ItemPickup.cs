@@ -7,7 +7,9 @@ public class ItemPickup : PhysicsObject
     // Start is called before the first frame update
     void Start()
     {
-        
+        Rigidbody rb = GetComponent<Rigidbody>();
+        rb.useGravity = false;
+        this.tag = "PhysicsObject";
     }
 
     // Update is called once per frame
@@ -16,11 +18,16 @@ public class ItemPickup : PhysicsObject
         
     }
 
-    private void OnTriggerEnter(Collider other)
+    //protected void OnTriggerEnter(Collider other)
+    //{
+    //    if (other.gameObject.name == "Player")
+    //    {
+    //        DoPickupAction(other.gameObject.GetComponent<MoonManController>());
+    //    }
+    //}
+
+    protected virtual void DoPickupAction(MoonManController player)
     {
-        if (other.gameObject.name == "Player")
-        {
-            
-        }
+        
     }
 }

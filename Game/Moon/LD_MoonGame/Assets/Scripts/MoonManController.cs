@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -15,8 +16,24 @@ public class MoonManController : MonoBehaviour
     GameObject jetpackLeft;
     GameObject jetpackRight;
 
+    GameObject roboBottom;
+    GameObject roboMiddle;
+    GameObject roboHead;
+    GameObject roboAxle;
+
+    GameObject carryingArea;
+
     public float Fuel;
     public float fuelDrainSpeed;
+
+    public float Energy;
+    public float energyDrainSpeed;
+
+    public GameObject WaterCrateInstance;
+    private int countofBlocks;
+
+    List<GameObject> spawnedWaterBlocks = new List<GameObject>();
+    List<Guid> guidsUsed = new List<Guid>();
 
     private void Start()
     {
@@ -26,9 +43,19 @@ public class MoonManController : MonoBehaviour
         backWheelRight = GameObject.Find("Wheel_Back_Right");
         jetpackLeft = GameObject.Find("JetPack_Left");
         jetpackRight = GameObject.Find("JetPack_Right");
+        roboBottom = GameObject.Find("Robo_Bottom");
+        roboMiddle = GameObject.Find("Robo_Middle");
+        roboHead = GameObject.Find("Robo_Head");
+        roboAxle = GameObject.Find("Robo_Axle");
+        carryingArea = GameObject.Find("CarryingArea");
 
         Fuel = 100;
         fuelDrainSpeed = 50;
+
+        Energy = 100;
+        energyDrainSpeed = 1;
+
+        countofBlocks = 0;
     }
 
     // Update is called once per frame
@@ -45,6 +72,8 @@ public class MoonManController : MonoBehaviour
             frontWheelRight.transform.Rotate(new Vector3(0, -1.0f, 0));
             backWheelLeft.transform.Rotate(new Vector3(0, -1.0f, 0));
             backWheelRight.transform.Rotate(new Vector3(0, -1.0f, 0));
+
+            Energy -= 1 * Time.deltaTime;
         }
         else if (Input.GetKey(KeyCode.S))
         {
@@ -54,8 +83,10 @@ public class MoonManController : MonoBehaviour
             frontWheelRight.transform.Rotate(new Vector3(0, 1.0f, 0));
             backWheelLeft.transform.Rotate(new Vector3(0, 1.0f, 0));
             backWheelRight.transform.Rotate(new Vector3(0, 1.0f, 0));
+
+            Energy -= 1 * Time.deltaTime;
         }
-        
+
         if (Input.GetKey(KeyCode.A))
         {
             // Rotate left
@@ -127,5 +158,58 @@ public class MoonManController : MonoBehaviour
         {
             Fuel = 0;
         }
+
+        Energy -= (energyDrainSpeed + (countofBlocks/2)) * Time.deltaTime;
+
+        CheckDeath();
+    }
+
+    public void CheckDeath()
+    {
+        if (Energy <= 0)
+        {
+            frontWheelLeft.AddComponent<Rigidbody>();
+            frontWheelRight.AddComponent<Rigidbody>();
+            backWheelLeft.AddComponent<Rigidbody>();
+            backWheelRight.AddComponent<Rigidbody>();
+            jetpackLeft.AddComponent<Rigidbody>();
+            jetpackRight.AddComponent<Rigidbody>();
+            roboBottom.AddComponent<Rigidbody>();
+            roboMiddle.AddComponent<Rigidbody>();
+            roboHead.AddComponent<Rigidbody>();
+            roboAxle.AddComponent<Rigidbody>();
+
+            foreach(GameObject blocks in spawnedWaterBlocks)
+            {
+                blocks.AddComponent<Rigidbody>();
+            }
+
+        }
+    }
+
+    public void AddCarriedWaterCrate(Guid guid)
+    {
+        if (!guidsUsed.Contains(guid))
+        {
+            var cube = GameObject.Instantiate(WaterCrateInstance, carryingArea.transform);
+            cube.transform.position = carryingArea.transform.position + (this.transform.up * countofBlocks);
+            spawnedWaterBlocks.Add(cube);
+            countofBlocks++;
+            guidsUsed.Add(guid);
+        }
+    }
+
+    public int DeliverWater()
+    {
+        int countToReturn = countofBlocks;
+        countofBlocks = 0;
+        guidsUsed.Clear();
+        foreach(var cube in spawnedWaterBlocks)
+        {
+            Destroy(cube.gameObject);
+        }
+        spawnedWaterBlocks.Clear();
+
+        return countToReturn;
     }
 }
