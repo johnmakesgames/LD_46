@@ -15,6 +15,9 @@ public class MoonManController : MonoBehaviour
     GameObject jetpackLeft;
     GameObject jetpackRight;
 
+    public float Fuel;
+    public float fuelDrainSpeed;
+
     private void Start()
     {
         frontWheelLeft = GameObject.Find("Wheel_Front_Left");
@@ -23,6 +26,9 @@ public class MoonManController : MonoBehaviour
         backWheelRight = GameObject.Find("Wheel_Back_Right");
         jetpackLeft = GameObject.Find("JetPack_Left");
         jetpackRight = GameObject.Find("JetPack_Right");
+
+        Fuel = 100;
+        fuelDrainSpeed = 50;
     }
 
     // Update is called once per frame
@@ -40,8 +46,7 @@ public class MoonManController : MonoBehaviour
             backWheelLeft.transform.Rotate(new Vector3(0, -1.0f, 0));
             backWheelRight.transform.Rotate(new Vector3(0, -1.0f, 0));
         }
-
-        if (Input.GetKey(KeyCode.S))
+        else if (Input.GetKey(KeyCode.S))
         {
             rb.AddForce(this.transform.forward * -movementSpeed * Time.deltaTime);
 
@@ -50,7 +55,7 @@ public class MoonManController : MonoBehaviour
             backWheelLeft.transform.Rotate(new Vector3(0, 1.0f, 0));
             backWheelRight.transform.Rotate(new Vector3(0, 1.0f, 0));
         }
-
+        
         if (Input.GetKey(KeyCode.A))
         {
             // Rotate left
@@ -64,8 +69,7 @@ public class MoonManController : MonoBehaviour
             backWheelLeft.transform.Rotate(new Vector3(0, 1.0f, 0));
             backWheelRight.transform.Rotate(new Vector3(0, -1.0f, 0));
         }
-
-        if (Input.GetKey(KeyCode.D))
+        else if (Input.GetKey(KeyCode.D))
         {
             // Rotate left
             Vector3 currentForward = this.transform.forward;
@@ -89,10 +93,6 @@ public class MoonManController : MonoBehaviour
             jetpackLeft.transform.Rotate(new Vector3(-50, 0, 0));
             jetpackRight.transform.Rotate(new Vector3(-50, 0, 0));
         }
-        if (Input.GetKey(KeyCode.Space))
-        {
-            rb.AddForce(physicsObject.direcitonToMoon * (jumpForce * 2) * Time.deltaTime);
-        }
 
         if (Input.GetKeyDown(KeyCode.LeftControl))
         {
@@ -107,6 +107,25 @@ public class MoonManController : MonoBehaviour
         if (Input.GetKey(KeyCode.LeftControl))
         {
             rb.AddForce(physicsObject.direcitonToMoon * -jumpForce * Time.deltaTime);
+            Fuel -= fuelDrainSpeed * Time.deltaTime;
+        }
+        else if (Input.GetKey(KeyCode.Space))
+        {
+            rb.AddForce(physicsObject.direcitonToMoon * (jumpForce * 2) * Time.deltaTime);
+            Fuel -= fuelDrainSpeed * Time.deltaTime;
+        }
+        else
+        {
+            Fuel += fuelDrainSpeed / 3 * Time.deltaTime;
+        }
+
+        if (Fuel > 100)
+        {
+            Fuel = 100;
+        }
+        if (Fuel < 0)
+        {
+            Fuel = 0;
         }
     }
 }
