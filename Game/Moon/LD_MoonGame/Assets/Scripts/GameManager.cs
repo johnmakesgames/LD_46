@@ -48,7 +48,7 @@ public class GameManager : MonoBehaviour
     IEnumerator EndGame()
     {
         gameEnding = true;
-        yield return new WaitForSeconds(5);
+        yield return new WaitForSeconds(6);
 
         if (deathType == "Energy")
         {
