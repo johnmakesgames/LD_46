@@ -76,6 +76,7 @@
     <Compile Include="Assets\Scripts\WaterDeliveryPlatform.cs" />
     <Compile Include="Assets\Scripts\WorldCenter.cs" />
     <None Include="Assets\Shaders\PS.shader" />
+    <None Include="Assets\ReadMe.txt" />
     <Reference Include="Unity.Timeline.Editor">
       <HintPath>E:/Projects/Personal Projects/LD_46/LD_46/Game/Moon/LD_MoonGame/Library/ScriptAssemblies/Unity.Timeline.Editor.dll</HintPath>
     </Reference>
