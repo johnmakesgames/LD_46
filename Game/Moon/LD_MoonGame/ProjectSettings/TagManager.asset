@@ -6,6 +6,10 @@ TagManager:
   tags:
   - Planet
   - PhysicsObject
+  - GM
+  - Objective
+  - EnergyPad
+  - WaterCube
   layers:
   - Default
   - TransparentFX

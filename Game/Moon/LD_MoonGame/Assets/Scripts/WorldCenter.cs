@@ -18,7 +18,15 @@ public class WorldCenter : MonoBehaviour
     public void FixedUpdate()
     {
         var objects = GameObject.FindGameObjectsWithTag("PhysicsObject");
-        foreach(var phyicsObject in objects)
+        foreach (var phyicsObject in objects)
+        {
+            var transform = phyicsObject.GetComponent<Transform>();
+            AttractToPlanet(transform);
+            phyicsObject.GetComponent<PhysicsObject>().direcitonToMoon = (transform.position - base.transform.position).normalized;
+        }
+
+        var waterCubes = GameObject.FindGameObjectsWithTag("WaterCube");
+        foreach (var phyicsObject in waterCubes)
         {
             var transform = phyicsObject.GetComponent<Transform>();
             AttractToPlanet(transform);

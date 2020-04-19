@@ -53,7 +53,7 @@ public class MoonManController : MonoBehaviour
         fuelDrainSpeed = 50;
 
         Energy = 100;
-        energyDrainSpeed = 1;
+        energyDrainSpeed = 0.5f;
 
         countofBlocks = 0;
     }
@@ -61,7 +61,7 @@ public class MoonManController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        var rb = this.GetComponent<Rigidbody>();
+        var rb    = this.GetComponent<Rigidbody>();
         var physicsObject = this.GetComponent<PhysicsObject>();
 
         if (Input.GetKey(KeyCode.W))
@@ -135,19 +135,19 @@ public class MoonManController : MonoBehaviour
             jetpackLeft.transform.Rotate(new Vector3(50, 0, 0));
             jetpackRight.transform.Rotate(new Vector3(50, 0, 0));
         }
-        if (Input.GetKey(KeyCode.LeftControl))
+        if (Input.GetKey(KeyCode.LeftControl) && Fuel > 0)
         {
             rb.AddForce(physicsObject.direcitonToMoon * -jumpForce * Time.deltaTime);
             Fuel -= fuelDrainSpeed * Time.deltaTime;
         }
-        else if (Input.GetKey(KeyCode.Space))
+        else if (Input.GetKey(KeyCode.Space) && Fuel > 0)
         {
             rb.AddForce(physicsObject.direcitonToMoon * (jumpForce * 2) * Time.deltaTime);
             Fuel -= fuelDrainSpeed * Time.deltaTime;
         }
         else
         {
-            Fuel += fuelDrainSpeed / 3 * Time.deltaTime;
+            Fuel += fuelDrainSpeed / 10 * Time.deltaTime;
         }
 
         if (Fuel > 100)
@@ -168,22 +168,27 @@ public class MoonManController : MonoBehaviour
     {
         if (Energy <= 0)
         {
-            frontWheelLeft.AddComponent<Rigidbody>();
-            frontWheelRight.AddComponent<Rigidbody>();
-            backWheelLeft.AddComponent<Rigidbody>();
-            backWheelRight.AddComponent<Rigidbody>();
-            jetpackLeft.AddComponent<Rigidbody>();
-            jetpackRight.AddComponent<Rigidbody>();
-            roboBottom.AddComponent<Rigidbody>();
-            roboMiddle.AddComponent<Rigidbody>();
-            roboHead.AddComponent<Rigidbody>();
-            roboAxle.AddComponent<Rigidbody>();
+            Explode();
+            GameObject.Find("GM").GetComponent<GameManager>().EndGame("Energy");
+        }
+    }
 
-            foreach(GameObject blocks in spawnedWaterBlocks)
-            {
-                blocks.AddComponent<Rigidbody>();
-            }
+    public void Explode()
+    {
+        frontWheelLeft.AddComponent<Rigidbody>();
+        frontWheelRight.AddComponent<Rigidbody>();
+        backWheelLeft.AddComponent<Rigidbody>();
+        backWheelRight.AddComponent<Rigidbody>();
+        jetpackLeft.AddComponent<Rigidbody>();
+        jetpackRight.AddComponent<Rigidbody>();
+        roboBottom.AddComponent<Rigidbody>();
+        roboMiddle.AddComponent<Rigidbody>();
+        roboHead.AddComponent<Rigidbody>();
+        roboAxle.AddComponent<Rigidbody>();
 
+        foreach (GameObject blocks in spawnedWaterBlocks)
+        {
+            blocks.AddComponent<Rigidbody>();
         }
     }
 

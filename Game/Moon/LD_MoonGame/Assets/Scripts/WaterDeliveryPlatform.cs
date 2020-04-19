@@ -10,6 +10,11 @@ public class WaterDeliveryPlatform : MonoBehaviour
         {
             var player = other.GetComponentInParent<MoonManController>();
             int waterCount = player.DeliverWater();
+
+            GameManager gm = GameObject.FindGameObjectWithTag("GM").GetComponent<GameManager>();
+            gm.plantWaterLevel += waterCount * 5;
+            if (gm.plantWaterLevel > 100)
+                gm.plantWaterLevel = 100;
         }
     }
 }

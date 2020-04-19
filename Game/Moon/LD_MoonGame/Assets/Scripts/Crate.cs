@@ -12,7 +12,7 @@ public class Crate : ItemPickup
         itemGUid = Guid.NewGuid();
         Rigidbody rb = GetComponent<Rigidbody>();
         rb.useGravity = false;
-        this.tag = "PhysicsObject";
+        this.tag = "WaterCube";
     }
 
     // Update is called once per frame
