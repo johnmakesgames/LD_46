@@ -809,4 +809,4 @@ ScriptsOnlyBuild:
   - Assets/Scenes/Game.unity
   - Assets/Scenes/GameOver_Death.unity
   - Assets/Scenes/GameOver_Flower.unity
-  playerPath: E:/Projects/Personal Projects/LD_46/LD_46/Game/Moon/Final_Build/LD_MoonGame.exe
+  playerPath: E:/Projects/Personal Projects/LD_46/BuildOfGame/WindowsBuild/LD_MoonGame.exe
